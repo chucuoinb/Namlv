@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Namlv_Tutorial::post" title="Manage Post" module="Namlv_Tutorial" sortOrder="60" action="tutorial/post" resource="Namlv_Tutorial::post"/>
+    </menu>
+</config>

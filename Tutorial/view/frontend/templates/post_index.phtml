@@ -1,0 +1,80 @@
+<?php
+$list = $this->getHelper()->getPage((int)$this->getPage(), $this->getLimit());
+$numberPage = $this->getHelper()->getNumberPage($this->getLimit());
+if ($this->getPage() > $numberPage || $this->getPage() < 1)
+    $active = 1;
+else
+    $active = $this->getPage();
+?>
+<div id="wrapper">
+
+    <div class="row">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            foreach ($list as $item) {
+                echo '
+                    <tr >
+                    
+                        <td >' . $item['id'] . '</td>
+                        <td>
+                        <img class="img_post" src="' . $this->getRootImage() . $item['image'] . '">
+                        
+</td>
+                        <td >' . $item['title'] . '</td> 
+                        <td>' . $this->getShortDescription($item['description']) . '... <a onclick="view(' . $item["id"] . ')">Reading Continue</a></td>
+                    </tr>
+                ';
+            }
+            ?>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="select_page">Page:</label>
+                <select id="select_page">
+                    <option value="5" <?php if ($this->getHelper()->getSession('numberInPage',$this->getDefault()) == 5 ) echo 'selected'?>>5</option>
+                    <option value="10" <?php if ($this->getHelper()->getSession('numberInPage',$this->getDefault()) == 10 ) echo 'selected'?>>10</option>
+                    <option value="15" <?php if ($this->getHelper()->getSession('numberInPage',$this->getDefault()) == 15 ) echo 'selected'?>>15</option>
+                </select>
+            </div>
+            <ul class="pagination col-md-6" id="menu_page">
+                <li><a href="
+                    <?php
+                    if ($active==1)
+                        echo '#';
+                    else
+                        echo 'http://localhost/magento/tutorial/post/index/page/'.($active-1);
+                        ?>
+                ">&laquo;</a></li>
+                <?php
+
+                for ($i = 1; $i <= $numberPage; $i++) {
+                    if ($active == $i)
+                        echo '<li class="active "><a href="#">' . $i . '</a></li>';
+                    else
+                        echo '<li class=""><a href="http://localhost/magento/tutorial/post/index/page/' . $i . '">' . $i . '</a></li>';
+                }
+
+                ?>
+                <li><a href="
+                <?php
+                    if ($active==$numberPage)
+                        echo '#';
+                    else
+                        echo 'http://localhost/magento/tutorial/post/index/page/'.($active+1);
+                    ?>
+                ">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>

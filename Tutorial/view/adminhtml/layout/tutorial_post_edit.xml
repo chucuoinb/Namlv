@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<page
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        layout="admin-2columns-left"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Namlv\Tutorial\Block\Adminhtml\Post\Edit" name="namlv_tutorial_listbutton"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Namlv\Tutorial\Block\Adminhtml\Post\Edit\Tabs" name="tutorial_post_edit_tabs">
+                <block class="Namlv\Tutorial\Block\Adminhtml\Post\Edit\Tab\General" name="tutorial_post_edit_tab_general"/>
+                <block class="Namlv\Tutorial\Block\Adminhtml\Post\Edit\Tab\Websites" name="tutorial_post_edit_tab_websites"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">general_section</argument>
+                    <argument name="block" xsi:type="string">tutorial_post_edit_tab_general</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">websites_section</argument>
+                    <argument name="block" xsi:type="string">tutorial_post_edit_tab_websites</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

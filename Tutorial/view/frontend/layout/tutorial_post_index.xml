@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Namlv_Tutorial::bootstrap/css/bootstrap.min.css"/>
+        <css src="Namlv_Tutorial::css/css_main.css"/>
+        <script src="Namlv_Tutorial::bootstrap/js/bootstrap.min.js" />
+        <script src="Namlv_Tutorial::bootstrap/js/jquery.min.js" />
+        <script src="Namlv_Tutorial::js/js_main.js" />
+    </head>
+    <body>
+
+    <referenceContainer name="content">
+        <block class="Namlv\Tutorial\Block\Post\Post" name="tutorial_post" template="post_index.phtml" />
+    </referenceContainer>
+    </body>
+</page>
