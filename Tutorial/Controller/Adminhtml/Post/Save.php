@@ -58,10 +58,10 @@ class Save extends Action
      */
     public function execute()
     {
-        echo '<script>console.log("Your stuff here")</script>';
         $resultRedirect = $this->resultRedirectFactory->create();
         $request = $this->getRequest();
         $data = $this->getRequest()->getPostValue();
+//        var_dump($data);
         if ($data) {
             $id = $request->getParam('id');
             $model = $this->postFactory->create()->load($id);
@@ -139,26 +139,24 @@ class Save extends Action
 
     }
 
-/**
- *
- * @return bool
- */
-protected
-function _isAllowed()
-{
-    if ($this->_authorization->isAllowed('Namlv_Tutorial::post_edit')
-        || $this->_authorization->isAllowed('Namlv_Tutorial::post_new')
-    ) {
-        return true;
+    /**
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        if ($this->_authorization->isAllowed('Namlv_Tutorial::post_edit')
+            || $this->_authorization->isAllowed('Namlv_Tutorial::post_new')
+        ) {
+            return true;
+        }
+        return false;
     }
-    return false;
-}
 
-public
-function createFilename()
-{
-    $keys = array_merge(range(0, 9), range('a', 'z'));
-    $name = time() . $keys[array_rand($keys)] . $keys[array_rand($keys)] . $keys[array_rand($keys)];
-    return $name;
-}
+    public function createFilename()
+    {
+        $keys = array_merge(range(0, 9), range('a', 'z'));
+        $name = time() . $keys[array_rand($keys)] . $keys[array_rand($keys)] . $keys[array_rand($keys)];
+        return $name;
+    }
 }

@@ -55,7 +55,7 @@ class Delete extends Action
                 $title = $model->getData('title');
                 $image = $model->getData('image');
                 $model->delete();
-                if (file_exists($postPathUpload.$image))
+                if ($image && file_exists($postPathUpload.$image))
                     unlink($postPathUpload.$image);
                 $this->messageManager->addSuccess(__($title.' has been deleted'));
                 return $resultRedirect->setPath('*/*/');

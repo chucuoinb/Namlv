@@ -5,9 +5,14 @@
  * Date: 08/07/2017
  * Time: 08:55
  */
+
 namespace Namlv\Tutorial\Setup;
+
+use Magento\Framework\DB\Adapter\AdapterInterface;
+use Magento\Framework\DB\Ddl\Table;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
+
 class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
 {
     /**
@@ -22,79 +27,79 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
         // TODO: Implement install() method.
         $installer = $setup;
         $installer->startSetup();
-        if(!$installer->tableExists('namlv_tutorial_post')){
+        if (!$installer->tableExists('namlv_tutorial_post')) {
             $table = $installer->getConnection()->newTable(
                 $installer->getTable('namlv_tutorial_post')
             )
                 ->addColumn(
                     'id',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    Table::TYPE_INTEGER,
                     null,
                     [
-                        'identity'=>true,
-                        'nullable'=>false,
-                        'primary'=>true,
-                        'unsigned'=>true,
+                        'identity' => true,
+                        'nullable' => false,
+                        'primary' => true,
+                        'unsigned' => true
                     ],
                     'POST ID'
                 )
                 ->addColumn(
                     'title',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     null,
                     [
-                        'nullable'=>false,
+                        'nullable' => false,
                     ],
                     'POST TITLE'
                 )
                 ->addColumn(
                     'observer',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     null,
                     [],
                     'POST observer'
                 )
                 ->addColumn(
                     'description',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    Table::TYPE_TEXT,
                     null,
                     [
-                        'nullable'=>false,
+                        'nullable' => false,
                     ],
                     'POST DESCRIPTION'
                 )
                 ->addColumn(
                     'image',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    40,
+                    Table::TYPE_TEXT,
+                    null,
                     [
-                        'nullable'=>false,
+                        'nullable' => false,
                     ],
                     'POST IMAGE'
                 )
                 ->addColumn(
                     'status',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+                    Table::TYPE_SMALLINT,
                     null,
                     [
-                        'nullable'=>false,
+                        'nullable' => false,
                         'default' => '1',
                     ],
                     'POST STATUS'
                 )
                 ->addColumn(
                     'create_at',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                    Table::TYPE_TIMESTAMP,
                     null,
-                    ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
+                    ['nullable' => false, 'default' => Table::TIMESTAMP_INIT],
 
                     'TIME CREATE'
                 )
                 ->addColumn(
                     'update_at',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                    Table::TYPE_TIMESTAMP,
                     null,
-                    ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
+                    ['nullable' => false, 'default' => Table::TIMESTAMP_INIT_UPDATE],
 
                     'TIME UPDATE'
                 )
@@ -104,13 +109,54 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 $installer->getTable('namlv_tutorial_post'),
                 $setup->getIdxName(
                     $installer->getTable('namlv_tutorial_post'),
-                    ['title','description','image'],
-                    \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_FULLTEXT
+                    ['title', 'description', 'image'],
+                    AdapterInterface::INDEX_TYPE_FULLTEXT
                 ),
-                ['title','description','image'],
-                \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_FULLTEXT
+                ['title', 'description', 'image'],
+                AdapterInterface::INDEX_TYPE_FULLTEXT
             );
-            $installer->endSetup();
         }
+        if (!$installer->tableExists('namlv_tutorial_post_store')) {
+            $table = $installer->getConnection()->newTable(
+                $installer->getTable('namlv_tutorial_post_store')
+            )
+                ->addColumn(
+                    'post_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    [
+                        'identity' => true,
+                        'nullable' => false,
+                        'unsigned' => true],
+                    'namlv_tutorial_post.id'
+                )
+                ->addColumn(
+                    'store_id',
+                    Table::TYPE_SMALLINT,
+                    null,
+                    ['nullable' => false,'unsigned' => true],
+                    'store.store_id'
+                )->addIndex(
+                    $installer->getIdxName('namlv_tutorial_post_store', ['store_id']),
+                    ['store_id']
+                )->addForeignKey(
+                    $installer->getFkName('namlv_tutorial_post_store', 'post_id', 'namlv_tutorial_post', 'id'),
+                    'post_id',
+                    $installer->getTable('namlv_tutorial_post'),
+                    'id',
+                    \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+                )->addForeignKey(
+                    $installer->getFkName('namlv_tutorial_post_store', 'store_id', 'store', 'store_id'),
+                    'store_id',
+                    $installer->getTable('store'),
+                    'store_id',
+                    \Magento\Framework\DB\Ddl\Table::ACTION_CASCADE
+                )->setComment(
+                    'Post Store To Store Linkage Table'
+                );
+            $installer->getConnection()->createTable($table);
+
+        }
+        $installer->endSetup();
     }
 }
