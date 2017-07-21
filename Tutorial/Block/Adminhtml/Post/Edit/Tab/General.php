@@ -88,6 +88,7 @@ class General extends Generic implements TabInterface
                 'name' => 'image',
                 'label' => __('Image'),
                 'title' => __('Image'),
+                'required' => true,
                 'note' => __('Extension of file as: jpg, jpeg, png')
             ]
         );

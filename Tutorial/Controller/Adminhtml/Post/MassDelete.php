@@ -72,8 +72,6 @@ class MassDelete extends Action
         foreach ($collection as $item){
             $image = $item->getData('image');
             $item->delete();
-            if (file_exists($postPathUpload.$image))
-                unlink($postPathUpload.$image);
 
         }
         $this->messageManager->addSuccess(__('A total of %1 record(s) have been deleted.', $size));

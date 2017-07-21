@@ -42,8 +42,7 @@ class Post extends AbstractHelper
      */
     public function getRootImage()
     {
-        $postPathUpload = $this->directoryList->getRoot() . DIRECTORY_SEPARATOR . DirectoryList::PUB . DIRECTORY_SEPARATOR . DirectoryList::MEDIA . DIRECTORY_SEPARATOR;
-        return $postPathUpload . \Namlv\Tutorial\Model\ResourceModel\Post::FILE_PATH_UPLOADED;
+        return  $this->directoryList->getRoot() . DIRECTORY_SEPARATOR . DirectoryList::PUB . DIRECTORY_SEPARATOR . DirectoryList::MEDIA . DIRECTORY_SEPARATOR;
     }
 
     /**

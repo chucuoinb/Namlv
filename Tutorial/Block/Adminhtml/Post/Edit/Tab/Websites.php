@@ -123,10 +123,10 @@ class Websites extends Generic implements TabInterface
                 'values' => $this->_systemStore->getStoreValuesForForm(false, true)
             ]
         );
-        $renderer = $this->getLayout()->createBlock(
-            'Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element'
-        );
-        $field->setRenderer($renderer);
+//        $renderer = $this->getLayout()->createBlock(
+//            'Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element'
+//        );
+//        $field->setRenderer($renderer);
 //        $formData->setSelectStores($formData->getData('stores'));
         if ($formData) {
             if ($formData->getData('stores') == null) {
