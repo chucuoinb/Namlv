@@ -188,7 +188,7 @@ class Post extends AbstractDb
     public function deleteImagePost(AbstractModel $object){
         $postPathUpload = $this->directoryList->getRoot() . DIRECTORY_SEPARATOR . DirectoryList::PUB . DIRECTORY_SEPARATOR . DirectoryList::MEDIA . DIRECTORY_SEPARATOR;
         $image = $object->getData('image');
-        if (file_exists($postPathUpload.$image))
+        if ($image && file_exists($postPathUpload.$image))
             unlink($postPathUpload.$image);
     }
 

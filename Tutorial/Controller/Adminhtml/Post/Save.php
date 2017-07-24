@@ -89,6 +89,7 @@ class Save extends Action
             }
             try {
                 $model->save();
+                $data['id'] = $model->getId();
                 $this->messageManager->addSuccess(__("saved"));
                 $this->_eventManager->dispatch('tutorial_save_observer', ['id' => $model->getId()]);
 
